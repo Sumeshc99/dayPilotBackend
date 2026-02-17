@@ -17,9 +17,12 @@ exports.swaggerOptions = (0, swagger_jsdoc_1.default)({
         },
         servers: [
             {
-                // url: "http://localhost:3000/api",
-                url: "https://daypilotbackend-production.up.railway.app/",
-                description: "Local development server",
+                url: process.env.RAILWAY_PUBLIC_DOMAIN
+                    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/api`
+                    : "http://localhost:3000/api",
+                description: process.env.RAILWAY_PUBLIC_DOMAIN
+                    ? "Production server"
+                    : "Local development server",
             },
         ],
         // 🔐 GLOBAL SECURITY ENABLED HERE
@@ -38,7 +41,10 @@ exports.swaggerOptions = (0, swagger_jsdoc_1.default)({
             },
         ],
     },
-    apis: [path_1.default.join(__dirname, "../routes/*.ts")],
+    apis: [
+        path_1.default.join(__dirname, "../routes/*.ts"),
+        path_1.default.join(__dirname, "../routes/*.js"),
+    ],
 });
 const setupSwagger = (app) => {
     app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(exports.swaggerOptions));
