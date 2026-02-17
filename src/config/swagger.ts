@@ -14,9 +14,12 @@ export const swaggerOptions = swaggerJsDoc({
     },
     servers: [
       {
-        // url: "http://localhost:3000/api",
-        url: "https://daypilotbackend-production.up.railway.app/",
-        description: "Local development server",
+        url: process.env.RAILWAY_PUBLIC_DOMAIN
+          ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/api`
+          : "http://localhost:3000/api",
+        description: process.env.RAILWAY_PUBLIC_DOMAIN
+          ? "Production server"
+          : "Local development server",
       },
     ],
 
@@ -37,7 +40,10 @@ export const swaggerOptions = swaggerJsDoc({
     ],
   },
 
-  apis: [path.join(__dirname, "../routes/*.ts")],
+  apis: [
+    path.join(__dirname, "../routes/*.ts"),
+    path.join(__dirname, "../routes/*.js"),
+  ],
 });
 
 export const setupSwagger = (app: Express) => {
