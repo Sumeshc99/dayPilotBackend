@@ -14,7 +14,8 @@ export const swaggerOptions = swaggerJsDoc({
     },
     servers: [
       {
-        url: "http://localhost:3000/api",
+        // url: "http://localhost:3000/api",
+        url: "https://daypilotbackend-production.up.railway.app/",
         description: "Local development server",
       },
     ],
