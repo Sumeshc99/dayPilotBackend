@@ -20,6 +20,10 @@ app.use(express.json());
 
 setupSwagger(app);
 
+app.get("/", (req, res) => {
+  res.json({ status: "ok", message: "Server is running" });
+});
+
 app.use("/api", router);
 
 export default app;
